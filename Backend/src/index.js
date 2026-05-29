@@ -1,16 +1,12 @@
 import dotenv from "dotenv";
 import express from "express";
-import cookieParser from "cookie-parser";
 import connectDB from "./config/db.js";
+import router from "./routes/user.route.js";
 import app from "./app.js";
 
 dotenv.config({
     path: './.env'
 });
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 
 const startServer = async () => {
     try {
