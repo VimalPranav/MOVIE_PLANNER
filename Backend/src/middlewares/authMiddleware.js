@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import User from "../models/User.js";
+import User from "../models/user.model.js";
 import asyncHandler from "./asyncHandler.js";
 
 // Check if the user is authenticated or not

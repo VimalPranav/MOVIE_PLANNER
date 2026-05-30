@@ -5,29 +5,22 @@ const userSchema = new Schema( // or mongoose.Schema
         username: {
             type: String,
             required: true,
-            unique: true,
-            lowercase: true,
-            trim: true,
-            minLength: 1,
-            maxLength: 30         
+            unique: true     
         },
 
         password: {
             type: String,
-            required: true,
-            minLength: 6,
-            maxLength: 50
+            required: true
         },
 
         email: {
             type: String,
             required: true,
             unique: true,
-            lowercase: true,
             trim: true
         },
 
-        idAdmin: {
+        isAdmin: {
             type: Boolean,
             default: false,
             required: true 
