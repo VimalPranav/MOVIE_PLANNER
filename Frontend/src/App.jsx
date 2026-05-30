@@ -1,5 +1,16 @@
+import { Outlet } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const App = () => {
-  return <h1 className="text-3xl font-bold underline text-teal-200">Hello, World!</h1>;
+  return (
+    <>
+      <ToastContainer />
+      <main className="container">  
+        <Outlet />
+      </main>
+    </>
+  );
 };
 
 export default App;
