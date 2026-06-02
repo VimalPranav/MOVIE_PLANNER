@@ -7,11 +7,11 @@ import { registerUser,
   updateCurrentUserProfile, } from '../controllers/user.controller.js';
 import { authenticate, authorizeAdmin } from "../middlewares/authMiddleware.js";
 
-const router = Router();
+const userRouter = Router();
 
-router.route('/register').post(registerUser).get(authenticate, authorizeAdmin, getAllUsers) ;
-router.route('/login').post(loginUser);
-router.route('/logout').post(logoutCurrentUser);
-router.route('/profile').get(authenticate, getCurrentUserProfile).put(authenticate, updateCurrentUserProfile);
+userRouter.route('/register').post(registerUser).get(authenticate, authorizeAdmin, getAllUsers) ;
+userRouter.route('/login').post(loginUser);
+userRouter.route('/logout').post(logoutCurrentUser);
+userRouter.route('/profile').get(authenticate, getCurrentUserProfile).put(authenticate, updateCurrentUserProfile);
 
-export default router;
+export default userRouter;
