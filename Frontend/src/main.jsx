@@ -14,14 +14,29 @@ import Register from './pages/Auth/Register.jsx';
 import LoginCheck from './pages/Auth/LoginCheck.jsx';
 import Profile from './pages/User/Profile.jsx';
 
+import AdminRoute from './pages/Admin/Adminroute.jsx';
+import CreateMovie from './pages/Admin/CreateMovie.jsx';
+import MoviesList from './pages/Admin/MoviesList.jsx';
+import UpdateMovie from './pages/Admin/UpdateMovie.jsx';
+import AllMovies from './pages/Movies/AllMovies.jsx';
+import MovieDetails from "./pages/Movies/MovieDetails.jsx";
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />} >
       <Route index={true} path="/" element={<Home />}></Route>
+      <Route path="/movies" element={<AllMovies />} />
       <Route path="/login" element={<Login />}></Route>
       <Route path="/register" element={<Register />}></Route>
+      <Route path="/movies/:id" element={<MovieDetails />} />
       <Route path="" element={<LoginCheck />}>
         <Route path="/profile" element={<Profile />} />
+      </Route>
+
+      <Route path="" element={<AdminRoute />} >
+        <Route path="/admin/movies/create" element={<CreateMovie />} />
+        <Route path="/admin/movies_list" element={<MoviesList />} />
+        <Route path="/admin/movies/update/:id" element={<UpdateMovie />} />
       </Route>
     </Route>
   )

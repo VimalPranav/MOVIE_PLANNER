@@ -17,7 +17,7 @@ const movieSchema = new Schema(
             maxlength: 500
         },
 
-        releaseYear: {
+        year: {
             type: Number,
             required: true
         },
