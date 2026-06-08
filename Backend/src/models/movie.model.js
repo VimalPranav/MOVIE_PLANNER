@@ -10,6 +10,11 @@ const movieSchema = new Schema(
             maxlength: 60
         },
 
+        tmdbId: {
+        type: Number,
+        unique: true,
+        },
+
         description: {
             type: String,
             required: true,
@@ -24,6 +29,11 @@ const movieSchema = new Schema(
 
         image: {
             type: String,
+        },
+
+        genre: { 
+            type: [Number], 
+            required: true 
         },
 
         rating: {

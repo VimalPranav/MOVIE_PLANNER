@@ -71,8 +71,25 @@ const NewMovies = async (req, res) => {
     const newMovies = await Movie.find().sort({ createdAt: -1 }).limit(10);
     res.json(newMovies);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({
+      message: error.message,
+      stack: error.stack
+    });
   }
 };
 
-export { createMovies, getAllMovies, getSpecificMovie, updateMovie, deleteMovie, NewMovies };
+const TopMovies = async (req, res) => {
+  try {
+    const topMovies = await Movie.find().sort({ rating: -1 }).limit(10);
+    res.json(topMovies);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: error.message,
+      stack: error.stack
+    });
+  }
+};
+
+export { createMovies, getAllMovies, getSpecificMovie, updateMovie, deleteMovie, NewMovies, TopMovies };
