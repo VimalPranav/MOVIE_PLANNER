@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../redux/api/users";
 import { logout } from "../redux/features/auth/auth_slice";
@@ -64,6 +64,37 @@ const Home = () => {
   const { data: newMovies = [] } = useGetNewMoviesQuery();
 
   const { data: topMovies = [] } = useGetTopMoviesQuery();
+  
+  const recentScrollRef = useRef(null);
+  const topRatedScrollRef = useRef(null);
+
+  const scrollRecentLeft = () => {
+    recentScrollRef.current?.scrollBy({
+      left: -800,
+      behavior: "smooth",
+    });
+  };
+
+  const scrollRecentRight = () => {
+    recentScrollRef.current?.scrollBy({
+      left: 800,
+      behavior: "smooth",
+    });
+  };
+
+  const scrollTopLeft = () => {
+    topRatedScrollRef.current?.scrollBy({
+      left: -800,
+      behavior: "smooth",
+    });
+  };
+
+  const scrollTopRight = () => {
+    topRatedScrollRef.current?.scrollBy({
+      left: 800,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <div className="min-h-screen bg-[#131313] text-white font-['Anton'] selection:bg-[#e50914]/30">
@@ -124,17 +155,38 @@ const Home = () => {
         {/* --- Category Sliders (Netflix Style) --- */}
         <div className="px-12 mt-12 space-y-16 pb-24">
           
-          <div>
-            <h2 className="text-3xl mb-6 uppercase tracking-wider">
-              Recently added
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="text-3xl uppercase tracking-wider">
+              Recently Added
             </h2>
 
-            <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
-              {newMovies.map((movie) => (
-                <div
-                  key={movie._id}
-                  className="relative w-[220px] flex-shrink-0 bg-[#1c1c1c] rounded-lg overflow-hidden"
-                >
+            <div className="flex gap-2">
+              <button
+                onClick={scrollRecentLeft}
+                className="h-10 w-10 rounded-full bg-white/10 hover:bg-white/20 transition"
+              >
+                ❮
+              </button>
+
+              <button
+                onClick={scrollRecentRight}
+                className="h-10 w-10 rounded-full bg-white/10 hover:bg-white/20 transition"
+              >
+                ❯
+              </button>
+            </div>
+          </div>
+          <div ref={recentScrollRef} className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth">
+            {newMovies.map((movie) => (
+              <div
+                key={movie._id}
+                className="relative w-[220px] flex-shrink-0 bg-[#1c1c1c] rounded-lg overflow-hidden"
+              >
+                <Link
+                      key={movie._id}
+                      to={`/movies/${movie._id}`}
+                      className="group"
+                >                          
                   <img
                     src={movie.image || DEFAULT_MOVIE_IMAGE}
                     alt={movie.name}
@@ -158,21 +210,43 @@ const Home = () => {
                       {movie.year}
                     </p>
                   </div>
-                </div>
-              ))}
-            </div>
+                </Link>
+              </div>
+            ))}
           </div>
-          <div>
-            <h2 className="text-3xl mb-6 uppercase tracking-wider">
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="text-3xl uppercase tracking-wider">
               Top Rated
             </h2>
 
-            <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
-              {topMovies.map((movie) => (
-                <div
-                  key={movie._id}
-                  className="relative w-[220px] flex-shrink-0 bg-[#1c1c1c] rounded-lg overflow-hidden"
-                >
+            <div className="flex gap-2">
+              <button
+                onClick={scrollTopLeft}
+                className="h-10 w-10 rounded-full bg-white/10 hover:bg-white/20 transition"
+              >
+                ❮
+              </button>
+
+              <button
+                onClick={scrollTopRight}
+                className="h-10 w-10 rounded-full bg-white/10 hover:bg-white/20 transition"
+              >
+                ❯
+              </button>
+            </div>
+          </div>
+
+          <div ref={topRatedScrollRef} className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth">
+            {topMovies.map((movie) => (
+              <div
+                key={movie._id}
+                className="relative w-[220px] flex-shrink-0 bg-[#1c1c1c] rounded-lg overflow-hidden"
+              >
+                <Link
+                      key={movie._id}
+                      to={`/movies/${movie._id}`}
+                      className="group"
+                >   
                   <img
                     src={movie.image || DEFAULT_MOVIE_IMAGE}
                     alt={movie.name}
@@ -196,9 +270,9 @@ const Home = () => {
                       {movie.year}
                     </p>
                   </div>
-                </div>
-              ))}
-            </div>
+                </Link>
+              </div>
+            ))}
           </div>
           
         </div>
