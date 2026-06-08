@@ -16,7 +16,7 @@ import Profile from './pages/User/Profile.jsx';
 
 import AdminRoute from './pages/Admin/Adminroute.jsx';
 import CreateMovie from './pages/Admin/CreateMovie.jsx';
-import MoviesList from './pages/Admin/MoviesList.jsx';
+import MoviesList from './pages/Movies/MoviesList.jsx';
 import UpdateMovie from './pages/Admin/UpdateMovie.jsx';
 import MovieDetails from "./pages/Movies/MovieDetails.jsx";
 

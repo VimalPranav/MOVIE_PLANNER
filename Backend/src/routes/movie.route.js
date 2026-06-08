@@ -13,7 +13,7 @@ movieRouter.route('/delete/:id').delete(authenticate, authorizeAdmin, deleteMovi
 // Open
 movieRouter.route('/').get(getAllMovies);
 movieRouter.route('/new').get(NewMovies);
-movieRouter.route('/top').get(TopMovies)
+movieRouter.route('/top').get(TopMovies);
 movieRouter.route('/:id').get(getSpecificMovie);
 
 export default movieRouter;

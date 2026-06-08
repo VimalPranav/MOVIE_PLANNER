@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { useGetAllMoviesQuery } from "../../redux/api/movies";
-import { useEffect, useState } from "react";
+import { useGetAllMoviesQuery, useGetSpecificMovieQuery } from "../../redux/api/movies";
+import { useEffect, useState, useRef } from "react";
 
 const MoviesList = () => {
     const { data: movies } = useGetAllMoviesQuery();
@@ -35,7 +35,7 @@ const MoviesList = () => {
                     {movies?.map((movie) => (
                         <Link
                         key={movie._id}
-                        to={`/admin/movies/update/${movie._id}`}
+                        to={`/movies/${movie._id}`}
                         className="group"
                         >
                         <div className="relative overflow-hidden rounded-2xl">

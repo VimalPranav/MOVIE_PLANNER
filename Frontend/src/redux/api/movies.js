@@ -30,7 +30,7 @@ export const moviesApiSlice = apiSlice.injectEndpoints({
     }),
 
     getSpecificMovie: builder.query({
-      query: (id) => `${MOVIE_URL}/specific-movie/${id}`,
+      query: (id) => `${MOVIE_URL}/${id}`,
     }),
 
     getNewMovies: builder.query({
