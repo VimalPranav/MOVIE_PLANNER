@@ -18,7 +18,6 @@ import AdminRoute from './pages/Admin/Adminroute.jsx';
 import CreateMovie from './pages/Admin/CreateMovie.jsx';
 import MoviesList from './pages/Admin/MoviesList.jsx';
 import UpdateMovie from './pages/Admin/UpdateMovie.jsx';
-import AllMovies from './pages/Movies/AllMovies.jsx';
 import MovieDetails from "./pages/Movies/MovieDetails.jsx";
 
 const router = createBrowserRouter(

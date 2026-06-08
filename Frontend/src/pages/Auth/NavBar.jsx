@@ -65,24 +65,10 @@ const Navigation = () => {
               </Link>
 
               <Link
-                to="/trends"
+                to="/movies"
                 className="hover:text-white transition-colors"
               >
-                Trends
-              </Link>
-
-              <Link
-                to="/collections"
-                className="hover:text-white transition-colors"
-              >
-                Collections
-              </Link>
-
-              <Link
-                to="/new-releases"
-                className="hover:text-white transition-colors"
-              >
-                New Releases
+                Browse Movies
               </Link>
 
               {isLoggedIn && (
@@ -142,12 +128,12 @@ const Navigation = () => {
                   <button className="flex items-center gap-3 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition">
 
                     <img
-                      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100"
+                      src="https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcGYtaWNvbjQtamlyMjA2NC1wb3ItbC5qcGc.jpg"
                       alt="Profile"
-                      className="w-9 h-9 rounded-full border border-[#e50914]"
+                      className="w-7 h-7 rounded-full border border-[#e50914]"
                     />
 
-                    <span className="text-sm font-medium">
+                    <span className="text-white font-medium">
                       Account
                     </span>
 
@@ -160,14 +146,14 @@ const Navigation = () => {
 
                     <Link
                       to="/profile"
-                      className="block px-4 py-3 text-sm hover:bg-white/5"
+                      className="block px-4 py-3 text-white hover:bg-white/5"
                     >
                       Profile
                     </Link>
 
                     <Link
                       to="/settings"
-                      className="block px-4 py-3 text-sm hover:bg-white/5"
+                      className="block px-4 py-3 text-white hover:bg-white/5"
                     >
                       Settings
                     </Link>
