@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {
   useCreateMovieMutation,
   useUploadImageMutation,
+  useSearchTMDBMoviesMutation,
 } from "../../redux/api/movies";
 import { toast } from "react-toastify";
 
@@ -16,6 +17,7 @@ const CreateMovie = () => {
     cast: [],
     rating: 0,
     image: null,
+    genre: "",
   });
 
   const [selectedImage, setSelectedImage] = useState(null);
@@ -50,7 +52,8 @@ const CreateMovie = () => {
         !movieData.name ||
         !movieData.year ||
         !movieData.description ||
-        !movieData.cast
+        !movieData.genre ||
+        !movieData.rating
       ) {
         toast.error("Please fill all required fields");
         return;
@@ -82,7 +85,7 @@ const CreateMovie = () => {
         })
      }
 
-        navigate("/admin/movies_list");
+        navigate("/movies");
 
         setMovieData({
           name: "",
@@ -99,6 +102,53 @@ const CreateMovie = () => {
       console.error("Failed to create movie: ", createMovieErrorDetail);
       toast.error(`Failed to create movie: ${createMovieErrorDetail?.message}`);
     } 
+  };
+
+  const [tmdbQuery, setTmdbQuery] = useState("");
+  const [tmdbResults, setTmdbResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchTMDBMovies] = useSearchTMDBMoviesMutation();
+
+  const handleTMDBSearch = async () => {
+    try {
+        setIsSearching(true);
+
+        const result = await searchTMDBMovies(
+        tmdbQuery
+        ).unwrap();
+
+        setTmdbResults(result);
+    } catch (error) {
+        console.log(error);
+
+        toast.error(
+            error?.data?.message ||
+            error?.error ||
+            "Search failed"
+        );
+    } finally {
+        setIsSearching(false);
+    }
+  };
+
+  const importTMDBMovie = (movie) => {
+    setMovieData({
+        name: movie.title,
+        year: Number(
+        movie.release_date?.slice(0, 4)
+        ),
+        description: movie.overview,
+        rating: movie.vote_average,
+        cast: [],
+        genre: movie.genre_ids || [],
+        image: movie.poster_path
+        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+        : null,
+    });
+
+    toast.success(
+        "Movie data imported. Review and save."
+    );
   };
 
   return (
@@ -146,6 +196,72 @@ const CreateMovie = () => {
                     <p className="text-white/40 font-sans text-xl max-w-2xl">Populate the cinema database with a new premium title.</p>
                 </header>
 
+                {/* import directly from TMDB */}
+                <div className="mb-10 bg-white/5 border border-white/10 rounded-2xl p-6">
+
+                    <h3 className="text-2xl font-bold mb-4">
+                        Import From TMDB
+                    </h3>
+
+                    <div className="flex gap-4">
+
+                        <input
+                        type="text"
+                        value={tmdbQuery}
+                        onChange={(e) =>
+                            setTmdbQuery(e.target.value)
+                        }
+                        placeholder="Search movie..."
+                        className="flex-1 bg-black/30 border border-white/10 px-4 py-3 rounded-xl"
+                        />
+
+                        <button
+                        onClick={handleTMDBSearch}
+                        className="bg-[#e50914] px-6 py-3 rounded-xl"
+                        >
+                        Search
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div className="grid grid-cols-4 gap-4 mt-6">
+                {tmdbResults.map((movie) => (
+                    <div
+                    key={movie.id}
+                    className="bg-white/5 rounded-xl overflow-hidden"
+                    >
+                    <img
+                        src={
+                        movie.poster_path
+                            ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                            : "https://via.placeholder.com/500x750"
+                        }
+                        alt={movie.title}
+                        className="h-72 w-full object-cover"
+                    />
+
+                    <div className="p-4">
+                        <h4 className="font-bold">
+                        {movie.title}
+                        </h4>
+
+                        <p className="text-sm text-white/50">
+                        {movie.release_date?.slice(0, 4)}
+                        </p>
+
+                        <button
+                        onClick={() => importTMDBMovie(movie)}
+                        className="mt-4 w-full bg-[#e50914] py-2 rounded-lg"
+                        >
+                        Import
+                        </button>
+                    </div>
+                    </div>
+                ))}
+                </div>
+
                 <form className="grid grid-cols-12 gap-10" onSubmit={(e) => e.preventDefault()}>
                     {/* Left Column: Details */}
                     <div className="col-span-8 space-y-8">
@@ -185,6 +301,16 @@ const CreateMovie = () => {
                                 max="10"
                                 className="border px-2 py-1 w-full"
                                 />
+                            </label>
+
+                            <label className="block">
+                                Genre:
+                                <textarea
+                                name="genre"
+                                value={movieData.genre}
+                                onChange={handleChange}
+                                className="border px-2 py-1 w-full"
+                                ></textarea>
                             </label>
                         </div>
 
