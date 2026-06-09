@@ -1,6 +1,21 @@
 import mongoose, { Schema } from "mongoose";
 const { ObjectId } = mongoose.Schema;
 
+const reviewSchema = mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    userRating: { type: Number, required: true },
+    comment: { type: String },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+  },
+  { timestamps: true }
+);
+
+
 const movieSchema = new Schema(
     {
         name: {
@@ -11,8 +26,8 @@ const movieSchema = new Schema(
         },
 
         tmdbId: {
-        type: Number,
-        unique: true,
+            type: Number,
+            unique: true,
         },
 
         description: {
@@ -32,11 +47,16 @@ const movieSchema = new Schema(
         },
 
         genre: { 
-            type: [Number], 
-            required: true 
+            type: [Number]
         },
 
         rating: {
+            type: Number,
+             min: 0,
+             max: 10
+        },
+
+        imdbRating: {
             type: Number,
              min: 0,
              max: 10
@@ -46,7 +66,9 @@ const movieSchema = new Schema(
             type: String,
         }],
 
-        createdAt: { type: Date, default: Date.now }
+        createdAt: { type: Date, default: Date.now },
+        reviews: [reviewSchema],
+        numReviews: { type: Number, required: true, default: 0 }
     },
     { timestamps: true }
 )

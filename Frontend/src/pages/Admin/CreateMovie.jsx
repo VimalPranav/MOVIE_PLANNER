@@ -18,6 +18,7 @@ const CreateMovie = () => {
     rating: 0,
     image: null,
     genre: "",
+    imdbRating: 0,
   });
 
   const [selectedImage, setSelectedImage] = useState(null);
@@ -53,7 +54,7 @@ const CreateMovie = () => {
         !movieData.year ||
         !movieData.description ||
         !movieData.genre ||
-        !movieData.rating
+        !movieData.imdbRating
       ) {
         toast.error("Please fill all required fields");
         return;
@@ -95,6 +96,7 @@ const CreateMovie = () => {
           rating: 0,
           image: null,
           genre: "",
+          imdbRating: 0,
         });
 
         toast.success("Movie Added To Database");
@@ -138,7 +140,7 @@ const CreateMovie = () => {
         movie.release_date?.slice(0, 4)
         ),
         description: movie.overview,
-        rating: movie.vote_average,
+        imdbRating: movie.vote_average,
         cast: [],
         genre: movie.genre_ids || [],
         image: movie.poster_path
@@ -154,29 +156,6 @@ const CreateMovie = () => {
   return (
     <div className="min-h-screen bg-[#131313] text-white font-['Anton'] selection:bg-[#e50914]/30">
             
-        {/* --- Top Navigation --- */}
-        <nav className="fixed top-0 z-50 w-full flex justify-between items-center px-12 py-4 bg-[#131313]/90 backdrop-blur-xl border-b border-white/10">
-            <div className="flex items-center gap-12">
-                <div className="text-3xl font-bold tracking-tighter text-[#e50914] cursor-pointer hover:opacity-80 transition-opacity">
-                    MoviePlanner
-                </div>
-                <div className="flex gap-8 text-xs uppercase tracking-[0.2em] text-white/60">
-                    <a href="#" className="hover:text-white transition-colors">Trends</a>
-                    <a href="#" className="hover:text-white transition-colors">Collections</a>
-                    <a href="#" className="hover:text-white transition-colors">New Releases</a>
-                </div>
-            </div>
-            
-            <div className="flex items-center gap-6">
-                <button className="material-icons text-white/60 hover:text-white transition-colors">notifications</button>
-                <div className="flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/10 rounded-xl cursor-pointer">
-                    <div className="w-8 h-8 rounded-full border border-[#e50914] overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100" alt="Admin" className="w-full h-full object-cover" />
-                    </div>
-                </div>
-            </div>
-        </nav>
-
         <main className="pt-32 pb-24 px-12 max-w-7xl mx-auto flex gap-16">
             
             {/* --- Admin Sidebar --- */}
@@ -291,11 +270,11 @@ const CreateMovie = () => {
                             </label>
 
                             <label className="block">
-                                Rating (0-10):
+                                ImdbRating (0-10):
                                 <input
                                 type="number"
                                 name="rating"
-                                value={movieData.rating}
+                                value={movieData.imdbRating}
                                 onChange={handleChange}
                                 min="0"
                                 max="10"

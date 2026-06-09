@@ -92,4 +92,85 @@ const TopMovies = async (req, res) => {
   }
 };
 
-export { createMovies, getAllMovies, getSpecificMovie, updateMovie, deleteMovie, NewMovies, TopMovies };
+const movieReview = async (req, res) => {
+  try {
+    const { userRating, comment } = req.body;
+    const movie = await Movie.findById(req.params.id);
+
+    if (movie) {
+      const alreadyReviewed = movie.reviews.find(
+        (r) => r.user.toString() === req.user._id.toString()
+      );
+
+      if (alreadyReviewed) {
+        res.status(400);
+        throw new Error("Movie already reviewed");
+      }
+
+      if (!userRating || userRating < 1 || userRating > 10) {
+        return res.status(400).json({
+          message: "Rating must be between 1 and 10",
+        });
+      }
+
+      const review = {
+        name: req.user.username,
+        userRating: Number(userRating),
+        comment,
+        user: req.user._id,
+      };
+
+      movie.reviews.push(review);
+      movie.numReviews = movie.reviews.length;
+      movie.rating =
+        movie.reviews.reduce(
+        (acc, review) => acc + review.userRating,
+        0
+      ) / movie.reviews.length;
+
+      await movie.save();
+      res.status(201).json(movie);
+    } else {
+      res.status(404);
+      throw new Error("Movie not found");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(400).json(error.message);
+  }
+};
+
+const deleteComment = async (req, res) => {
+  try {
+    const { movieId, reviewId } = req.body;
+    const movie = await Movie.findById(movieId);
+
+    if (!movie) {
+      return res.status(404).json({ message: "Movie not found" });
+    }
+
+    const reviewIndex = movie.reviews.findIndex(
+      (r) => r._id.toString() === reviewId
+    );
+
+    if (reviewIndex === -1) {
+      return res.status(404).json({ message: "Comment not found" });
+    }
+
+    movie.reviews.splice(reviewIndex, 1);
+    movie.numReviews = movie.reviews.length;
+    movie.userRating =
+      movie.reviews.length > 0
+        ? movie.reviews.reduce((acc, item) => item.userRating + acc, 0) /
+          movie.reviews.length
+        : 0;
+
+    await movie.save();
+    res.json({ message: "Comment Deleted Successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export { createMovies, getAllMovies, getSpecificMovie, updateMovie, deleteMovie, NewMovies, TopMovies, movieReview, deleteComment };

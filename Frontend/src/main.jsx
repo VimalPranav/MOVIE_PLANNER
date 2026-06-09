@@ -19,6 +19,7 @@ import CreateMovie from './pages/Admin/CreateMovie.jsx';
 import MoviesList from './pages/Movies/MoviesList.jsx';
 import UpdateMovie from './pages/Admin/UpdateMovie.jsx';
 import MovieDetails from "./pages/Movies/MovieDetails.jsx";
+import Favourites from './pages/Movies/Favourites.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,6 +29,7 @@ const router = createBrowserRouter(
       <Route path="/register" element={<Register />}></Route>
       <Route path="/movies/:id" element={<MovieDetails />} />
       <Route path="/movies" element={<MoviesList />} />
+      <Route path="/fav" element={<Favourites />} />
       <Route path="" element={<LoginCheck />}>
         <Route path="/profile" element={<Profile />} />
       </Route>

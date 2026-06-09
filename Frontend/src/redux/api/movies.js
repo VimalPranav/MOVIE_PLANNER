@@ -67,6 +67,14 @@ export const moviesApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+
+    addReview: builder.mutation({
+    query: ({ movieId, userRating, comment }) => ({
+      url: `${MOVIE_URL}/${movieId}/reviews`,
+      method: "POST",
+      body: { userRating, comment },
+    }),
+  }),
   }),
 });
 
@@ -83,4 +91,5 @@ export const {
     useGetTrendingMoviesQuery,
     useGetTopRatedMoviesQuery,
     useSearchTMDBMoviesMutation,
+    useAddReviewMutation,
 } = moviesApiSlice;
