@@ -25,7 +25,14 @@ const userSchema = new Schema( // or mongoose.Schema
             default: false,
             required: true 
         },
-        
+
+        favourites: {
+        type: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Movie",
+        }],
+        default: [],
+        },      
     },
 
     {

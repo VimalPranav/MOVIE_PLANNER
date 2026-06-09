@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -27,6 +28,8 @@ import {
     useGetTrendingMoviesQuery,
     useGetTopRatedMoviesQuery,
 } from "../redux/api/movies";
+
+import { useToggleFavouriteMutation, useGetFavouritesQuery } from '../redux/api/users';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -103,6 +106,9 @@ const Home = () => {
       behavior: "smooth",
     });
   };
+
+  const { data: favourites = [] } = useGetFavouritesQuery();
+  const [toggleFavourite] = useToggleFavouriteMutation();
 
   return (
     <div className="min-h-screen bg-[#131313] text-white font-['Anton'] selection:bg-[#e50914]/30">
@@ -184,7 +190,13 @@ const Home = () => {
             </div>
           </div>
           <div ref={recentScrollRef} className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth">
-            {newMovies.map((movie) => (
+            {newMovies.map((movie) => {
+            
+            const isFavourite = favourites.some(
+                (fav) => fav._id === movie._id
+            );
+
+            return(
               <div
                 key={movie._id}
                 className="relative w-[220px] flex-shrink-0 bg-[#1c1c1c] rounded-lg overflow-hidden"
@@ -208,6 +220,35 @@ const Home = () => {
                   ⭐ {movie.rating || movie.imdbRating}
                   </div>
 
+                  {/* Favourite Button */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
+                  <button
+                  onClick={async (e) => {
+                      console.log("Heart clicked");
+                      e.preventDefault();
+                      e.stopPropagation();
+
+                      try {
+                          console.log("Movie ID:", movie._id);
+                          await toggleFavourite(movie._id).unwrap();
+                          refetch();
+                      } catch (err) {
+                          console.error("API Error:", err);
+                      }
+                  }}
+                  className="absolute top-3 left-3 z-20
+                              bg-black/60 backdrop-blur-md
+                              p-2 rounded-full
+                              hover:scale-110
+                              transition-all duration-300"
+                  >
+                  {isFavourite ? (
+                      <FaHeart className="text-red-500 text-xl" />
+                  ) : (
+                      <FaRegHeart className="text-white text-xl" />
+                  )}
+                  </button>
+
                   <div className="p-4">
                     <h3 className="text-xl font-bold truncate">
                       {movie.name}
@@ -218,8 +259,8 @@ const Home = () => {
                     </p>
                   </div>
                 </Link>
-              </div>
-            ))}
+              </div>)
+              })}
           </div>
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center gap-4 mb-6">
@@ -247,7 +288,12 @@ const Home = () => {
           </div>
 
           <div ref={topRatedScrollRef} className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth">
-            {topMovies.map((movie) => (
+            {topMovies.map((movie) => {
+            const isFavourite = favourites.some(
+                (fav) => fav._id === movie._id
+            );
+
+            return(
               <div
                 key={movie._id}
                 className="relative w-[220px] flex-shrink-0 bg-[#1c1c1c] rounded-lg overflow-hidden"
@@ -271,6 +317,35 @@ const Home = () => {
                   ⭐ {movie.rating || "N/A"}
                   </div>
 
+                  {/* Favourite Button */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
+                  <button
+                  onClick={async (e) => {
+                      console.log("Heart clicked");
+                      e.preventDefault();
+                      e.stopPropagation();
+
+                      try {
+                          console.log("Movie ID:", movie._id);
+                          await toggleFavourite(movie._id).unwrap();
+                          refetch();
+                      } catch (err) {
+                          console.error("API Error:", err);
+                      }
+                  }}
+                  className="absolute top-3 left-3 z-20
+                              bg-black/60 backdrop-blur-md
+                              p-2 rounded-full
+                              hover:scale-110
+                              transition-all duration-300"
+                  >
+                  {isFavourite ? (
+                      <FaHeart className="text-red-500 text-xl" />
+                  ) : (
+                      <FaRegHeart className="text-white text-xl" />
+                  )}
+                  </button>
+
                   <div className="p-4">
                     <h3 className="text-xl font-bold truncate">
                       {movie.name}
@@ -281,8 +356,8 @@ const Home = () => {
                     </p>
                   </div>
                 </Link>
-              </div>
-            ))}
+              </div>)
+            })}
           </div>
           
         </div>

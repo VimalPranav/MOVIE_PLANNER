@@ -68,7 +68,8 @@ const movieSchema = new Schema(
 
         createdAt: { type: Date, default: Date.now },
         reviews: [reviewSchema],
-        numReviews: { type: Number, required: true, default: 0 }
+        numReviews: { type: Number, required: true, default: 0 },
+        
     },
     { timestamps: true }
 )

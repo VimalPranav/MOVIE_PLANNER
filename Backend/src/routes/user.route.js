@@ -4,7 +4,9 @@ import { registerUser,
   logoutCurrentUser,
   getAllUsers,
   getCurrentUserProfile,
-  updateCurrentUserProfile, } from '../controllers/user.controller.js';
+  updateCurrentUserProfile,
+  toggleFavourite, 
+  getFavourites, } from '../controllers/user.controller.js';
 import { authenticate, authorizeAdmin } from "../middlewares/authMiddleware.js";
 
 const userRouter = Router();
@@ -13,5 +15,7 @@ userRouter.route('/register').post(registerUser).get(authenticate, authorizeAdmi
 userRouter.route('/login').post(loginUser);
 userRouter.route('/logout').post(logoutCurrentUser);
 userRouter.route('/profile').get(authenticate, getCurrentUserProfile).put(authenticate, updateCurrentUserProfile);
+userRouter.route('/fav/:movieId').post(authenticate, toggleFavourite);
+userRouter.route('/fav').get(authenticate, getFavourites);
 
 export default userRouter;

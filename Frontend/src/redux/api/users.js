@@ -32,8 +32,19 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 method: "PUT",
                 body: data,
             }),
-        })
+        }),
+
+        toggleFavourite: builder.mutation({
+            query: (movieId) => ({
+              url: `${USERS_URL}/fav/${movieId}`,
+              method: "POST",
+            }),
+        }),
+        
+        getFavourites: builder.query({
+            query: () => `${USERS_URL}/fav`,
+        }),
     }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useProfileMutation } = usersApiSlice;
+export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useProfileMutation, useGetFavouritesQuery, useToggleFavouriteMutation } = usersApiSlice;

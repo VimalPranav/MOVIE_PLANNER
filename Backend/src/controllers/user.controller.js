@@ -122,6 +122,37 @@ const updateCurrentUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
+const toggleFavourite = async (req, res) => {
+  const user = await User.findById(req.user._id);
+  const movieId = req.params.movieId;
+
+  console.log(user.favourites);
+  const exists = user.favourites.some(
+    (id) => id && id.toString() === movieId
+  );
+
+  console.log("movieId:", movieId);
+  console.log("params:", req.params);
+
+  if (exists) {
+    user.favourites = user.favourites.filter(
+      (id) => id && id.toString() !== movieId
+    );
+  } else {
+    user.favourites.push(movieId);
+  }
+
+  await user.save();
+
+  res.json(user.favourites);
+};
+
+const getFavourites = async (req, res) => {
+  const user = await User.findById(req.user._id).populate("favourites");
+
+  res.json(user.favourites);
+};
+
 export {
   registerUser,
   loginUser,
@@ -129,4 +160,6 @@ export {
   getAllUsers,
   getCurrentUserProfile,
   updateCurrentUserProfile,
+  toggleFavourite,
+  getFavourites,
 };
