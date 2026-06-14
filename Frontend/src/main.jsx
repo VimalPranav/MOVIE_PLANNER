@@ -30,10 +30,10 @@ const router = createBrowserRouter(
       <Route path="/register" element={<Register />}></Route>
       <Route path="/movies/:id" element={<MovieDetails />} />
       <Route path="/movies" element={<MoviesList />} />
-      <Route path="/fav" element={<Favourites />} />
       <Route path="" element={<LoginCheck />}>
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/fav" element={<Favourites />} />
       </Route>
 
       <Route path="" element={<AdminRoute />} >
