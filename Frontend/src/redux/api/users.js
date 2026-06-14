@@ -13,7 +13,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
 
         register: builder.mutation({
             query: (data) => ({
-                url: `${USERS_URL}`,
+                url: `${USERS_URL}/register`,
                 method: "POST",
                 body: data,
             }),
@@ -39,10 +39,12 @@ export const usersApiSlice = apiSlice.injectEndpoints({
               url: `${USERS_URL}/fav/${movieId}`,
               method: "POST",
             }),
+            invalidatesTags: ["Favourites"],
         }),
         
         getFavourites: builder.query({
             query: () => `${USERS_URL}/fav`,
+            providesTags: ["Favourites"],
         }),
     }),
 });

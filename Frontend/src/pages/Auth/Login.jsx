@@ -41,11 +41,14 @@ const Login = () => {
 
   return (
     <div>
-      <section className="pl-[10rem] flex flex-wrap">
-        <div className="mr-[4rem] mt-[5rem]">
-          <h1 className="text-2xl font-semibold mb-4">Sign In</h1>
+      <section className="min-h-screen bg-[#131313] text-white flex items-center justify-center overflow-hidden pt-14">
+        <div className="w-[420px] flex-shrink-0">
+          <div className="mb-10">
+            <h1 className="text-2xl font-semibold mb-4">Log In</h1>
+            <div className="w-20 h-1 bg-[#e50914] mt-3 rounded-full"></div>
+          </div>
 
-          <form onSubmit={submitHandler} className="container w-[40rem]">
+          <form onSubmit={submitHandler} className="space-y-5">
             <div className="my-[2rem]">
               <label
                 htmlFor="email"
@@ -56,7 +59,7 @@ const Login = () => {
               <input
                 type="email"
                 id="email"
-                className="mt-1 p-2 border rounded w-full"
+                className="mt-2 w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white placeholder:text-white/30 focus:outline-none focus:border-[#e50914] focus:ring-1 focus:ring-[#e50914] transition"
                 placeholder="Enter Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -72,7 +75,7 @@ const Login = () => {
               <input
                 type="password"
                 id="password"
-                className="mt-1 p-2 border rounded w-full"
+                className="mt-2 w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white placeholder:text-white/30 focus:outline-none focus:border-[#e50914] focus:ring-1 focus:ring-[#e50914] transition"
                 placeholder="Enter Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -82,7 +85,7 @@ const Login = () => {
             <button
               disabled={isLoading}
               type="submit"
-              className="bg-teal-500 text-white px-4 py-2 rounded cursor-pointer my-[1rem]"
+              className="w-full bg-[#e50914] hover:bg-[#b20710] text-white py-3 rounded-xl uppercase tracking-widest font-bold transition-all shadow-lg shadow-[#e50914]/30"
             >
               {isLoading ? "Signing In ..." : "Sign In"}
             </button>
@@ -90,23 +93,16 @@ const Login = () => {
           </form>
 
           <div className="mt-4">
-            <p className="text-white">
+            <p className="text-white/60 font-sans">
               New Customer?{" "}
               <Link
                 to={redirect ? `/register?redirect=${redirect}` : "/register"}
-                className="text-teal-500 hover:underline"
-              >
+                className="text-teal-500 hover:underline"className="text-[#e50914] hover:text-red-400 transition">
                 Register
               </Link>
             </p>
           </div>
         </div>
-
-        <img
-          src="https://images.unsplash.com/photo-1485095329183-d0797cdc5676?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt=""
-          className="h-[65rem] w-[55%] xl:block md:hidden sm:hidden rounded-lg"
-        />
       </section>
     </div>
   );
