@@ -6,8 +6,19 @@ import uploadRouter from "./routes/upload.route.js";
 import tmdbRouter from "./routes/tmdb.route.js";
 
 import path from "path";
+import cors from "cors";
 
 const app = express();
+
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://movieplannerfs.netlify.app",
+    ],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
