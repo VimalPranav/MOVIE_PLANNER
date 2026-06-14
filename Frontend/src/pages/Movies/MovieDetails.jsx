@@ -24,6 +24,7 @@ const MovieDetails = () => {
   const [userRating, setUserRating] = useState(0);
   const [comment, setComment] = useState("");
   const [addReview] = useAddReviewMutation();
+  const { userInfo } = useSelector((state) => state.auth);
 
   const submitReview = async (e) => {
     e.preventDefault();
@@ -76,6 +77,19 @@ const MovieDetails = () => {
                 <span className="text-white/60">
                 {movie.year}
                 </span>
+
+                {userInfo?.isAdmin && (
+                  <div className="flex justify-end mb-6">
+                      <Link
+                      to={`/admin/movies/update/${movie._id}`}
+                      className="bg-[#e50914] hover:bg-[#b20710] px-5 py-2 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-[#e50914]/20"
+                      >
+                      <span className="font-bold uppercase tracking-wider">
+                          Update
+                      </span>
+                      </Link>
+                  </div>
+                  )}
         </div>
 
         <h1 className="text-6xl font-black uppercase mb-6">
@@ -90,6 +104,7 @@ const MovieDetails = () => {
         </div>
       </section>
 
+      {/*Review section */}
       <section className="mt-16">
         <h2 className="text-4xl font-bold uppercase tracking-tighter mb-6">
           Write a Review

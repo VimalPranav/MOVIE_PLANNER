@@ -23,6 +23,19 @@ const MoviesList = () => {
     return (
     <div className="min-h-screen bg-[#131313] text-white">
         <main className="pt-32 pb-24 px-12 max-w-7xl mx-auto">
+        {userInfo?.isAdmin && (
+            <div className="flex justify-end mb-6">
+                <Link
+                to="/admin/movies/create"
+                className="bg-[#e50914] hover:bg-[#b20710] px-5 py-3 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-[#e50914]/20"
+                >
+                <span className="text-xl">+</span>
+                <span className="font-bold uppercase tracking-wider">
+                    New Entry
+                </span>
+                </Link>
+            </div>
+            )}
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
 

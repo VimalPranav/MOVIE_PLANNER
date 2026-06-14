@@ -136,30 +136,8 @@ const UpdateMovie = () => {
   };
     
   return (
-    <div className="min-h-screen bg-[#131313] text-white font-['Anton'] selection:bg-[#e50914]/30">
-            
-        {/* --- Top Navigation --- */}
-        <nav className="fixed top-0 z-50 w-full flex justify-between items-center px-12 py-4 bg-[#131313]/90 backdrop-blur-xl border-b border-white/10">
-            <div className="flex items-center gap-12">
-                <div className="text-3xl font-bold tracking-tighter text-[#e50914] cursor-pointer hover:opacity-80 transition-opacity">
-                    MoviePlanner
-                </div>
-                <div className="flex gap-8 text-xs uppercase tracking-[0.2em] text-white/60">
-                    <a href="#" className="hover:text-white transition-colors">Trends</a>
-                    <a href="#" className="hover:text-white transition-colors">Collections</a>
-                    <a href="#" className="hover:text-white transition-colors">New Releases</a>
-                </div>
-            </div>
-            
-            <div className="flex items-center gap-6">
-                <button className="material-icons text-white/60 hover:text-white transition-colors">notifications</button>
-                <div className="flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/10 rounded-xl cursor-pointer">
-                    <div className="w-8 h-8 rounded-full border border-[#e50914] overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100" alt="Admin" className="w-full h-full object-cover" />
-                    </div>
-                </div>
-            </div>
-        </nav>
+    <div className="min-h-screen bg-[#131313] text-white font-['Anton'] selection:bg-[#e50914]/30">        
+        
 
         <main className="pt-32 pb-24 px-12 max-w-7xl mx-auto flex gap-16">
             
