@@ -29,7 +29,14 @@ const Favourites = () => {
             <h1>Favourites</h1>
             
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
-            {favourites.map((movie) => (
+            {favourites.length === 0? (
+                <div className="col-span-full min-h-[70vh] flex items-center justify-center">
+                    <h2 className="text-4xl md:text-4xl font-bold text-white/50 text-center">
+                        No Favourites Yet...❤️
+                    </h2>
+                </div>
+            ):(
+            favourites.map((movie) => (
                 <Link
                 key={movie._id}
                 to={`/movies/${movie._id}`}
@@ -79,7 +86,7 @@ const Favourites = () => {
                     </p>
                 </div>
                 </Link>
-            ))}
+            )))}
             </div>
         </div>
     )

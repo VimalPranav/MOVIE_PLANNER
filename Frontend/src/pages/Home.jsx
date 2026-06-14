@@ -222,32 +222,34 @@ const Home = () => {
 
                   {/* Favourite Button */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
-                  <button
-                  onClick={async (e) => {
-                      console.log("Heart clicked");
-                      e.preventDefault();
-                      e.stopPropagation();
+                  {userInfo && (
+                    <button
+                    onClick={async (e) => {
+                        console.log("Heart clicked");
+                        e.preventDefault();
+                        e.stopPropagation();
 
-                      try {
-                          console.log("Movie ID:", movie._id);
-                          await toggleFavourite(movie._id).unwrap();
-                          refetch();
-                      } catch (err) {
-                          console.error("API Error:", err);
-                      }
-                  }}
-                  className="absolute top-3 left-3 z-20
-                              bg-black/60 backdrop-blur-md
-                              p-2 rounded-full
-                              hover:scale-110
-                              transition-all duration-300"
-                  >
-                  {isFavourite ? (
-                      <FaHeart className="text-red-500 text-xl" />
-                  ) : (
-                      <FaRegHeart className="text-white text-xl" />
+                        try {
+                            console.log("Movie ID:", movie._id);
+                            await toggleFavourite(movie._id).unwrap();
+                            refetch();
+                        } catch (err) {
+                            console.error("API Error:", err);
+                        }
+                    }}
+                    className="absolute top-3 left-3 z-20
+                                bg-black/60 backdrop-blur-md
+                                p-2 rounded-full
+                                hover:scale-110
+                                transition-all duration-300"
+                    >
+                    {isFavourite ? (
+                        <FaHeart className="text-red-500 text-xl" />
+                    ) : (
+                        <FaRegHeart className="text-white text-xl" />
+                    )}
+                    </button>
                   )}
-                  </button>
 
                   <div className="p-4">
                     <h3 className="text-xl font-bold truncate">
@@ -319,32 +321,34 @@ const Home = () => {
 
                   {/* Favourite Button */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
-                  <button
-                  onClick={async (e) => {
-                      console.log("Heart clicked");
-                      e.preventDefault();
-                      e.stopPropagation();
+                  {userInfo && (
+                    <button
+                    onClick={async (e) => {
+                        console.log("Heart clicked");
+                        e.preventDefault();
+                        e.stopPropagation();
 
-                      try {
-                          console.log("Movie ID:", movie._id);
-                          await toggleFavourite(movie._id).unwrap();
-                          refetch();
-                      } catch (err) {
-                          console.error("API Error:", err);
-                      }
-                  }}
-                  className="absolute top-3 left-3 z-20
-                              bg-black/60 backdrop-blur-md
-                              p-2 rounded-full
-                              hover:scale-110
-                              transition-all duration-300"
-                  >
-                  {isFavourite ? (
-                      <FaHeart className="text-red-500 text-xl" />
-                  ) : (
-                      <FaRegHeart className="text-white text-xl" />
+                        try {
+                            console.log("Movie ID:", movie._id);
+                            await toggleFavourite(movie._id).unwrap();
+                            refetch();
+                        } catch (err) {
+                            console.error("API Error:", err);
+                        }
+                    }}
+                    className="absolute top-3 left-3 z-20
+                                bg-black/60 backdrop-blur-md
+                                p-2 rounded-full
+                                hover:scale-110
+                                transition-all duration-300"
+                    >
+                    {isFavourite ? (
+                        <FaHeart className="text-red-500 text-xl" />
+                    ) : (
+                        <FaRegHeart className="text-white text-xl" />
+                    )}
+                    </button>
                   )}
-                  </button>
 
                   <div className="p-4">
                     <h3 className="text-xl font-bold truncate">

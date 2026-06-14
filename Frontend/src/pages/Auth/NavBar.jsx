@@ -71,7 +71,7 @@ const Navigation = () => {
                 Browse Movies
               </Link>
 
-              {isLoggedIn && (
+              {userInfo && (
                 <Link
                   to="/fav"
                   className="text-[#e50914] font-semibold hover:text-red-400 transition"

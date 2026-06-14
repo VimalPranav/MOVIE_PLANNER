@@ -72,14 +72,6 @@ const Profile = () => {
                             <span className="uppercase tracking-widest text-sm font-bold">Notifications</span> 
                         </a> 
                     </nav> 
-                    
-                    {/* Pro Plan Card */} 
-                    <div className="mt-12 p-6 rounded-2xl bg-gradient-to-br from-[#1c1b1b] to-[#0e0e0e] border border-white/5 relative overflow-hidden group"> 
-                        <div className="absolute top-0 right-0 w-24 h-24 bg-[#e50914]/10 blur-3xl rounded-full -mr-12 -mt-12 group-hover:bg-[#e50914]/20 transition-all"></div> 
-                        <span className="text-[10px] text-[#e50914] font-bold tracking-[0.2em] uppercase mb-2 block">Pro Plan</span> 
-                        <p className="text-lg font-bold leading-tight mb-4 uppercase tracking-tight">Unlimited Previews & Exclusive Premieres</p> 
-                        <button className="w-full py-2 bg-[#e50914]/10 hover:bg-[#e50914] text-[#e50914] hover:text-white border border-[#e50914]/50 rounded-lg text-xs font-bold uppercase tracking-widest transition-all"> Manage Plan </button> 
-                    </div> 
                 </aside> 
                 
                 {/* Form Content */} 
