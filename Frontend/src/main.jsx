@@ -13,6 +13,7 @@ import Login from './pages/Auth/Login.jsx';
 import Register from './pages/Auth/Register.jsx';
 import LoginCheck from './pages/Auth/LoginCheck.jsx';
 import Profile from './pages/User/Profile.jsx';
+import Settings from './pages/User/Settings.jsx';
 
 import AdminRoute from './pages/Admin/Adminroute.jsx';
 import CreateMovie from './pages/Admin/CreateMovie.jsx';
@@ -32,6 +33,7 @@ const router = createBrowserRouter(
       <Route path="/fav" element={<Favourites />} />
       <Route path="" element={<LoginCheck />}>
         <Route path="/profile" element={<Profile />} />
+        <Route path="/settings" element={<Settings />} />
       </Route>
 
       <Route path="" element={<AdminRoute />} >
