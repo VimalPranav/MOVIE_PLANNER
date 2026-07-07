@@ -29,7 +29,7 @@ import {
     useGetTopRatedMoviesQuery,
 } from "../redux/api/movies";
 
-import { useToggleFavouriteMutation, useGetFavouritesQuery } from '../redux/api/users';
+import { useToggleFavouriteMutation, useGetFavouritesQuery, useToggleWatchlistMutation, useGetWatchlistQuery } from '../redux/api/users';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -109,6 +109,8 @@ const Home = () => {
 
   const { data: favourites = [] } = useGetFavouritesQuery();
   const [toggleFavourite] = useToggleFavouriteMutation();
+  const { data: watchlist = [] } = useGetWatchlistQuery();
+  const [toggleWatchlist] = useToggleWatchlistMutation();
 
   return (
     <div className="min-h-screen bg-[#131313] text-white font-['Anton'] selection:bg-[#e50914]/30">
@@ -195,6 +197,9 @@ const Home = () => {
             const isFavourite = favourites.some(
                 (fav) => fav._id === movie._id
             );
+            const isWatchlist = watchlist.some(
+                (wl) => wl._id === movie._id
+            );
 
             return(
               <div
@@ -250,6 +255,43 @@ const Home = () => {
                     )}
                     </button>
                   )}
+                  {/* Watchlist Button */}
+                  {userInfo && (
+                      <button
+                          onClick={async (e) => {
+                              console.log("Watchlist clicked");
+                              e.preventDefault();
+                              e.stopPropagation();
+
+                          try {
+                              console.log("Movie ID:", movie._id);
+                              await toggleWatchlist(movie._id).unwrap();
+                              refetch();
+                          } catch (err) {
+                              console.error("API Error:", err);
+                          }
+                      }}
+                      className="absolute top-3 left-13 z-20
+                                  w-9 h-9
+                                  rounded-full
+                                  bg-black/60
+                                  backdrop-blur-md
+                                  border border-white/10
+                                  flex justify-center
+                                  text-white
+                                  text-2xl
+                                  font-light
+                                  hover:bg-[#e50914]
+                                  hover:rotate-90
+                                  hover:scale-110
+                                  transition-all duration-300"
+                  >
+                      {isWatchlist ? (
+                          <span className="text-yellow-400 text-2xl font-bold">+</span>  
+                      ) : (
+                          <span className="text-white text-2xl font-bold">+</span>
+                      )}
+                  </button>)}
 
                   <div className="p-4">
                     <h3 className="text-xl font-bold truncate">
@@ -293,6 +335,9 @@ const Home = () => {
             {topMovies.map((movie) => {
             const isFavourite = favourites.some(
                 (fav) => fav._id === movie._id
+            );
+            const isWatchlist = watchlist.some(
+                (wl) => wl._id === movie._id
             );
 
             return(
@@ -349,6 +394,43 @@ const Home = () => {
                     )}
                     </button>
                   )}
+                  {/* Watchlist Button */}
+                  {userInfo && (
+                      <button
+                          onClick={async (e) => {
+                              console.log("Watchlist clicked");
+                              e.preventDefault();
+                              e.stopPropagation();
+
+                          try {
+                              console.log("Movie ID:", movie._id);
+                              await toggleWatchlist(movie._id).unwrap();
+                              refetch();
+                          } catch (err) {
+                              console.error("API Error:", err);
+                          }
+                      }}
+                      className="absolute top-3 left-13 z-20
+                                  w-9 h-9
+                                  rounded-full
+                                  bg-black/60
+                                  backdrop-blur-md
+                                  border border-white/10
+                                  flex justify-center
+                                  text-white
+                                  text-2xl
+                                  font-light
+                                  hover:bg-[#e50914]
+                                  hover:rotate-90
+                                  hover:scale-110
+                                  transition-all duration-300"
+                  >
+                      {isWatchlist ? (
+                          <span className="text-yellow-400 text-2xl font-bold">+</span>  
+                      ) : (
+                          <span className="text-white text-2xl font-bold">+</span>
+                      )}
+                  </button>)}
 
                   <div className="p-4">
                     <h3 className="text-xl font-bold truncate">

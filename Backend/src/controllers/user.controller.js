@@ -153,6 +153,33 @@ const getFavourites = async (req, res) => {
   res.json(user.favourites);
 };
 
+const toggleWatchlist = async (req, res) => {
+  const user = await User.findById(req.user._id);
+  const movieId = req.params.movieId;
+
+  const exists = user.watchlist.some(
+    (id) => id && id.toString() === movieId
+  );
+
+  if (exists) {
+    user.watchlist = user.watchlist.filter(
+      (id) => id && id.toString() !== movieId
+    );
+  } else {
+    user.watchlist.push(movieId);
+  }
+
+  await user.save();
+
+  res.json(user.watchlist);
+};
+
+const getWatchlist = async (req, res) => {
+  const user = await User.findById(req.user._id).populate("watchlist");
+
+  res.json(user.watchlist);
+};
+
 export {
   registerUser,
   loginUser,
@@ -162,4 +189,6 @@ export {
   updateCurrentUserProfile,
   toggleFavourite,
   getFavourites,
+  toggleWatchlist,
+  getWatchlist,
 };

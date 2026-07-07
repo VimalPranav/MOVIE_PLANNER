@@ -6,7 +6,10 @@ import { registerUser,
   getCurrentUserProfile,
   updateCurrentUserProfile,
   toggleFavourite, 
-  getFavourites, } from '../controllers/user.controller.js';
+  getFavourites,
+  toggleWatchlist,
+  getWatchlist,
+ } from '../controllers/user.controller.js';
 import { authenticate, authorizeAdmin } from "../middlewares/authMiddleware.js";
 
 const userRouter = Router();
@@ -17,5 +20,7 @@ userRouter.route('/logout').post(logoutCurrentUser);
 userRouter.route('/profile').get(authenticate, getCurrentUserProfile).put(authenticate, updateCurrentUserProfile);
 userRouter.route('/fav/:movieId').post(authenticate, toggleFavourite);
 userRouter.route('/fav').get(authenticate, getFavourites);
+userRouter.route('/watchlist/:movieId').post(authenticate, toggleWatchlist);
+userRouter.route('/watchlist').get(authenticate, getWatchlist);
 
 export default userRouter;

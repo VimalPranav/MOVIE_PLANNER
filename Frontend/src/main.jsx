@@ -21,6 +21,7 @@ import MoviesList from './pages/Movies/MoviesList.jsx';
 import UpdateMovie from './pages/Admin/UpdateMovie.jsx';
 import MovieDetails from "./pages/Movies/MovieDetails.jsx";
 import Favourites from './pages/Movies/Favourites.jsx';
+import WatchList from './pages/Movies/WatchList.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -34,6 +35,7 @@ const router = createBrowserRouter(
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/fav" element={<Favourites />} />
+        <Route path="/watchlist" element={<WatchList />} />
       </Route>
 
       <Route path="" element={<AdminRoute />} >

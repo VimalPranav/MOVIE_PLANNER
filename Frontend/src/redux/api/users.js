@@ -46,7 +46,20 @@ export const usersApiSlice = apiSlice.injectEndpoints({
             query: () => `${USERS_URL}/fav`,
             providesTags: ["Favourites"],
         }),
+
+        toggleWatchlist: builder.mutation({
+            query: (movieId) => ({
+                url: `${USERS_URL}/watchlist/${movieId}`,
+                method: "POST",
+            }),
+            invalidatesTags: ["Watchlist"],
+        }),
+
+        getWatchlist: builder.query({
+            query: () => `${USERS_URL}/watchlist`,
+            providesTags: ["Watchlist"],
+        }),
     }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useProfileMutation, useGetFavouritesQuery, useToggleFavouriteMutation } = usersApiSlice;
+export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useProfileMutation, useGetFavouritesQuery, useToggleFavouriteMutation, useGetWatchlistQuery, useToggleWatchlistMutation } = usersApiSlice;

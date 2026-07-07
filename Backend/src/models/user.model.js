@@ -33,6 +33,14 @@ const userSchema = new Schema( // or mongoose.Schema
         }],
         default: [],
         },      
+
+        watchlist: {
+        type: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Movie",
+        }],
+        default: [],
+        },  
     },
 
     {
