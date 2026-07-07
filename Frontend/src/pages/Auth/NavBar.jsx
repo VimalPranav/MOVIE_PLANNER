@@ -25,6 +25,7 @@ const Navigation = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [search, setSearch] = useState("");
 
   const [logoutApiCall] = useLogoutMutation();
 
@@ -79,6 +80,14 @@ const Navigation = () => {
                   Favourites
                 </Link>
               )}
+              {userInfo && (
+                <Link
+                  to="/watchlist"
+                  className="hover:text-white transition-colors"
+                >
+                  Watchlist
+                </Link>
+              )}
             </div>
           </div>
 
@@ -89,13 +98,25 @@ const Navigation = () => {
             <div className="relative">
               <input
                 type="text"
-                placeholder="Search..."
+                placeholder="Search movies..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && search.trim()) {
+                    navigate(`/movies?search=${encodeURIComponent(search)}`);
+                  }
+                }}
                 className="w-56 bg-white/5 border border-white/10 rounded-full py-2 pl-4 pr-10 text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-[#e50914]"
               />
 
               <AiOutlineSearch
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 cursor-pointer"
                 size={18}
+                onClick={() => {
+                  if (search.trim()) {
+                    navigate(`/movies?search=${encodeURIComponent(search)}`);
+                  }
+                }}
               />
             </div>
 
