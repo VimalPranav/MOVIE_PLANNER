@@ -68,6 +68,12 @@ export const moviesApiSlice = apiSlice.injectEndpoints({
       }),
     }),
 
+    getWatchProviders: builder.query({
+        query: (tmdbId) => ({
+            url: `/api/v1/tmdb/movie/${tmdbId}/providers`,
+        }),
+    }),
+
     addReview: builder.mutation({
     query: ({ movieId, userRating, comment }) => ({
       url: `${MOVIE_URL}/${movieId}/reviews`,
@@ -92,4 +98,5 @@ export const {
     useGetTopRatedMoviesQuery,
     useSearchTMDBMoviesMutation,
     useAddReviewMutation,
+    useGetWatchProvidersQuery,
 } = moviesApiSlice;

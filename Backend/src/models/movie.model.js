@@ -28,6 +28,7 @@ const movieSchema = new Schema(
         tmdbId: {
             type: Number,
             unique: true,
+            default: null
         },
 
         description: {

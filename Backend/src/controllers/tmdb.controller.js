@@ -133,3 +133,27 @@ export const searchMovies = async (req, res) => {
     });
   }
 };
+
+export const getWatchProviders = async (req, res) => {
+  try {
+      const { tmdbId } = req.params;
+
+      const response = await axios.get(
+          `https://api.themoviedb.org/3/movie/${tmdbId}/watch/providers`,
+          {
+            headers: {
+              accept: "application/json",
+              Authorization: `Bearer ${process.env.TMDB_READ_TOKEN}`,
+            },
+          }
+      );
+      res.json(response.data);
+  } catch (error) {
+      console.log(error.response?.data);
+      console.log(error.message);
+
+      res.status(500).json({
+          message: error.response?.data || error.message,
+      });
+  }
+};

@@ -11,7 +11,7 @@ import {
   AiOutlineCalendar
 } from "react-icons/ai";
 
-import { useGetSpecificMovieQuery, useAddReviewMutation } from '../../redux/api/movies';
+import { useGetSpecificMovieQuery, useAddReviewMutation, useGetWatchProvidersQuery } from '../../redux/api/movies';
 
 const MovieDetails = () => {
   const navigate = useNavigate();
@@ -20,6 +20,14 @@ const MovieDetails = () => {
   const DEFAULT_MOVIE_IMAGE = "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80";
 
   const { data: movie, isLoading, error } = useGetSpecificMovieQuery(id);
+
+  const {
+      data: providers,
+      isLoading: providersLoading,
+  } = useGetWatchProvidersQuery(movie?.tmdbId, {
+      skip: !movie?.tmdbId,
+  });
+  const indiaProviders = providers?.results?.IN;
 
   const [userRating, setUserRating] = useState(0);
   const [comment, setComment] = useState("");
@@ -99,6 +107,41 @@ const MovieDetails = () => {
         <p className="text-white/70 text-xl leading-relaxed max-w-3xl">
                 {movie.description}
         </p>
+
+        {movie.tmdbId && (
+            <div className="mt-8">
+                <h2 className="text-2xl font-bold mb-4">
+                    Where to Watch
+                </h2>
+
+                {providersLoading ? (
+                    <p>Loading providers...</p>
+                ) : indiaProviders?.flatrate?.length ? (
+                    <div className="flex flex-wrap gap-4">
+                        {indiaProviders.flatrate.map((provider) => (
+                            <div
+                                key={provider.provider_id}
+                                className="flex flex-col items-center"
+                            >
+                                <img
+                                    src={`https://image.tmdb.org/t/p/w92${provider.logo_path}`}
+                                    alt={provider.provider_name}
+                                    className="w-14 h-14 rounded-xl"
+                                />
+
+                                <p className="text-sm mt-2">
+                                    {provider.provider_name}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <p className="text-white/50">
+                        Not available for streaming in your region.
+                    </p>
+                )}
+            </div>
+        )}
         </div>
 
         </div>

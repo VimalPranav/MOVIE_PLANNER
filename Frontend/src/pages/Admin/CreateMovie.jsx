@@ -19,6 +19,7 @@ const CreateMovie = () => {
     image: null,
     genre: "",
     imdbRating: 0,
+    tmdbId: null,
   });
 
   const [selectedImage, setSelectedImage] = useState(null);
@@ -54,7 +55,8 @@ const CreateMovie = () => {
         !movieData.year ||
         !movieData.description ||
         !movieData.genre ||
-        !movieData.imdbRating
+        !movieData.imdbRating ||
+        !movieData.tmdbId
       ) {
         toast.error("Please fill all required fields");
         return;
@@ -97,6 +99,7 @@ const CreateMovie = () => {
           image: null,
           genre: "",
           imdbRating: 0,
+          tmdbId: null,
         });
 
         toast.success("Movie Added To Database");
@@ -143,6 +146,7 @@ const CreateMovie = () => {
         imdbRating: movie.vote_average,
         cast: [],
         genre: movie.genre_ids || [],
+        tmdbId: movie.id,
         image: movie.poster_path
         ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
         : null,
@@ -315,6 +319,16 @@ const CreateMovie = () => {
                                 onChange={(e) =>
                                     setMovieData({ ...movieData, cast: e.target.value.split(", ") })
                                 }
+                                className="border px-2 py-1 w-full"
+                                />
+                            </label>
+                            <label className="block">
+                                TmbdID:
+                                <input
+                                type="number"
+                                name="tmdbId"
+                                value={movieData.tmdbId}
+                                onChange={handleChange}
                                 className="border px-2 py-1 w-full"
                                 />
                             </label>
