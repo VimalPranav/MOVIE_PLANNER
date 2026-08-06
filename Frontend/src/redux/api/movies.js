@@ -24,9 +24,11 @@ export const moviesApiSlice = apiSlice.injectEndpoints({
 
     deleteMovie: builder.mutation({
       query: (id) => ({
-        url: `${MOVIE_URL}/delete-movie/${id}`,
+        url: `${MOVIE_URL}/delete/${id}`,
         method: "DELETE",
+        credentials: "include", // Include credentials for authentication
       }),
+      invalidatesTags: ["Movie"],
     }),
 
     getSpecificMovie: builder.query({

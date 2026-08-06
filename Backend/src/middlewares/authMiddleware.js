@@ -8,6 +8,9 @@ const authenticate = asyncHandler(async (req, res, next) => {
 
   // Read JWT from the 'jwt' cookie
   token = req.cookies.jwt;
+  console.log("Cookies:", req.cookies);
+  console.log("Headers Cookie:", req.headers.cookie);
+  console.log(req.method, req.originalUrl);
 
   if (token) {
     try {

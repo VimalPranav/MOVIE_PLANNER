@@ -11,7 +11,7 @@ import {
   AiOutlineCalendar
 } from "react-icons/ai";
 
-import { useGetSpecificMovieQuery, useAddReviewMutation, useGetWatchProvidersQuery } from '../../redux/api/movies';
+import { useGetSpecificMovieQuery, useAddReviewMutation, useGetWatchProvidersQuery, useDeleteMovieMutation } from '../../redux/api/movies';
 
 const MovieDetails = () => {
   const navigate = useNavigate();
@@ -21,6 +21,27 @@ const MovieDetails = () => {
 
   const { data: movie, isLoading, error } = useGetSpecificMovieQuery(id);
 
+  const [deleteMovie] = useDeleteMovieMutation();
+
+  const handleDelete = async () => {
+      const confirmDelete = window.confirm(
+          "Are you sure you want to delete this movie?"
+      );
+
+      if (!confirmDelete) return;
+
+      try {
+          await deleteMovie(movie._id).unwrap();
+
+          navigate("/movies");
+          alert("Movie deleted successfully.");
+
+      } catch (err) {
+          console.error(err);
+          alert(err?.data?.message || "Failed to delete movie.");
+      }
+  };
+
   const {
       data: providers,
       isLoading: providersLoading,
@@ -28,6 +49,9 @@ const MovieDetails = () => {
       skip: !movie?.tmdbId,
   });
   const indiaProviders = providers?.results?.IN;
+  console.log("Providers:", providers);
+  console.log("India Providers:", indiaProviders);
+  console.log("Link:", indiaProviders?.link);
 
   const [userRating, setUserRating] = useState(0);
   const [comment, setComment] = useState("");
@@ -98,6 +122,20 @@ const MovieDetails = () => {
                       </Link>
                   </div>
                   )}
+                {userInfo?.isAdmin && (
+                  <div className="flex justify-end mb-6">
+                      <button
+                        onClick={handleDelete}
+                        className="bg-red-600 hover:bg-red-700 px-5 py-2 rounded-xl
+                                  flex items-center gap-2 transition-all
+                                  shadow-lg shadow-red-600/20"
+                     >
+                        <span className="font-bold uppercase tracking-wider">
+                            Delete
+                        </span>
+                    </button>
+                  </div>
+                  )}
         </div>
 
         <h1 className="text-6xl font-black uppercase mb-6">
@@ -119,20 +157,21 @@ const MovieDetails = () => {
                 ) : indiaProviders?.flatrate?.length ? (
                     <div className="flex flex-wrap gap-4">
                         {indiaProviders.flatrate.map((provider) => (
-                            <div
-                                key={provider.provider_id}
-                                className="flex flex-col items-center"
+                            <a
+                              key={provider.provider_id}
+                              href={indiaProviders.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex flex-col items-center hover:scale-105 transition"
                             >
-                                <img
-                                    src={`https://image.tmdb.org/t/p/w92${provider.logo_path}`}
-                                    alt={provider.provider_name}
-                                    className="w-14 h-14 rounded-xl"
-                                />
+                              <img
+                                src={`https://image.tmdb.org/t/p/w92${provider.logo_path}`}
+                                alt={provider.provider_name}
+                                className="w-14 h-14 rounded-xl"
+                              />
 
-                                <p className="text-sm mt-2">
-                                    {provider.provider_name}
-                                </p>
-                            </div>
+                              <p className="text-sm mt-2">{provider.provider_name}</p>
+                            </a>
                         ))}
                     </div>
                 ) : (
