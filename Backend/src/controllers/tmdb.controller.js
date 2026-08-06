@@ -157,3 +157,122 @@ export const getWatchProviders = async (req, res) => {
       });
   }
 };
+
+const importMovies = async (endpoint, pages = 1) => {
+    const existingMovies = await Movie.find({}, "tmdbId");
+
+    const existingIds = new Set(
+        existingMovies.map(movie => movie.tmdbId)
+    );
+
+    const moviesToInsert = [];
+
+    let skipped = 0;
+
+    for (let page = 1; page <= pages; page++) {
+
+        const response = await axios.get(
+            `https://api.themoviedb.org/3${endpoint}?page=${page}`,
+            { headers }
+        );
+
+        const movies = response.data.results;
+
+        for (const movie of movies) {
+
+            if (existingIds.has(movie.id)) {
+                skipped++;
+                continue;
+            }
+            if (!movie.overview || !movie.release_date) {
+                skipped++;
+                continue;
+            }
+            console.log(movie);
+
+            moviesToInsert.push({
+                tmdbId: movie.id,
+                name: movie.title,
+                description: movie.overview,
+                year: movie.release_date
+                    ? Number(movie.release_date.split("-")[0])
+                    : null,
+                image: movie.poster_path
+                    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                    : "",
+
+                genre: movie.genre_ids,
+                imdbRating: movie.vote_average,
+
+                cast: [],
+                reviews: [],
+                numReviews: 0,
+            });
+
+            existingIds.add(movie.id);
+        }
+    }
+
+    if (moviesToInsert.length) {
+        await Movie.insertMany(moviesToInsert);
+    }
+
+    return {
+        added: moviesToInsert.length,
+        skipped,
+    };
+};
+
+export const importPopularMovies = async (req, res) => {
+    try {
+
+        const result = await importMovies(
+            "/movie/popular",
+            10
+        );
+
+        res.json(result);
+
+    } catch (err) {
+
+        console.error(err);
+
+        res.status(500).json({
+            message: err.message,
+        });
+
+    }
+};
+
+export const importTopRatedMovies = async (req, res) => {
+
+    const result = await importMovies(
+        "/movie/top_rated",
+        10
+    );
+
+    res.json(result);
+
+};
+
+export const importUpcomingMovies = async (req, res) => {
+
+    const result = await importMovies(
+        "/movie/upcoming",
+        10
+    );
+
+    res.json(result);
+
+};
+
+export const importNowPlayingMovies = async (req, res) => {
+
+    const result = await importMovies(
+        "/movie/now_playing",
+        10
+    );
+
+    res.json(result);
+
+};

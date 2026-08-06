@@ -34,8 +34,7 @@ const movieSchema = new Schema(
         description: {
             type: String,
             required: true,
-            minlength: 1,
-            maxlength: 500
+            minlength: 1
         },
 
         year: {

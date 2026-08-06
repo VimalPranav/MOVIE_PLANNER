@@ -53,6 +53,7 @@ const updateMovie = async (req, res) => {
 
 const deleteMovie = async (req, res) => {
   try {
+    console.log("DELETE CONTROLLER REACHED");
     const { id } = req.params;
     const deleteMovie = await Movie.findByIdAndDelete(id);
 
