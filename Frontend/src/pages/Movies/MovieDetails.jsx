@@ -84,7 +84,7 @@ const MovieDetails = () => {
   if (!movie) return <div>Movie not found</div>;
 
   return (
-      <div className="min-h-screen bg-[#131313] text-white font-['Anton'] selection:bg-[#e50914]/30">
+      <div className="w-screen min-h-screen bg-[#131313] text-white font-['Anton'] selection:bg-[#e50914]/30">
       
       {/* --- Immersive Hero Section --- */}
       <section className="relative min-h-[80vh] bg-[#131313]">

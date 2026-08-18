@@ -136,7 +136,7 @@ const UpdateMovie = () => {
   };
     
   return (
-    <div className="min-h-screen bg-[#131313] text-white font-['Anton'] selection:bg-[#e50914]/30">        
+    <div className="w-screen min-h-screen bg-[#131313] text-white font-['Anton'] selection:bg-[#e50914]/30">        
         
 
         <main className="pt-32 pb-24 px-12 max-w-7xl mx-auto flex gap-16">

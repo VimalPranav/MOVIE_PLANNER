@@ -30,7 +30,7 @@ const MoviesList = () => {
     ) || [];
     
     return (
-    <div className="min-h-screen bg-[#131313] text-white">
+    <div className="w-screen min-h-screen bg-[#131313] text-white">
         <main className="pt-32 pb-24 px-12 max-w-7xl mx-auto">
         {userInfo?.isAdmin && (
             <div className="flex justify-end mb-6">

@@ -113,7 +113,7 @@ const Home = () => {
   const [toggleWatchlist] = useToggleWatchlistMutation();
 
   return (
-    <div className="min-h-screen bg-[#131313] text-white font-['Anton'] selection:bg-[#e50914]/30">
+    <div className="w-screen min-h-screen bg-[#131313] text-white font-['Anton'] selection:bg-[#e50914]/30">
       {/* Top Navigation */}
       
 

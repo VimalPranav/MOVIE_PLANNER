@@ -18,6 +18,7 @@ const Navigation = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [accountOpen, setAccountOpen] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -146,7 +147,10 @@ const Navigation = () => {
                 {/* ACCOUNT */}
                 <div className="relative group">
 
-                  <button className="flex items-center gap-3 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition">
+                  <button 
+                    onClick={() => setAccountOpen((prev) => !prev)}
+                    className="flex items-center gap-3 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition"
+                  >
 
                     <img
                       src="https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcGYtaWNvbjQtamlyMjA2NC1wb3ItbC5qcGc.jpg"
@@ -158,15 +162,45 @@ const Navigation = () => {
                       Account
                     </span>
 
-                    <AiOutlineDown size={14} />
+                    <AiOutlineDown 
+                      size={14} 
+                      className={`transition-transform duration-200 ${
+                       accountOpen ? "rotate-180" : ""
+                      }`}
+                    />
 
                   </button>
 
                   {/* DROPDOWN */}
-                  <div className="absolute right-0 mt-3 w-52 rounded-xl bg-[#181818] border border-white/10 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0 transition-all duration-300 overflow-hidden">
+                  <div
+                    className={`
+                      absolute right-0 mt-3
+                      w-44 sm:w-52
+                      max-w-[calc(100vw-2rem)]
+                      rounded-xl
+                      bg-[#181818]
+                      border border-white/10
+                      shadow-2xl
+                      overflow-hidden
+                      z-50
+
+                      transition-all duration-200
+
+                      ${
+                        accountOpen
+                          ? "opacity-100 visible translate-y-0"
+                          : "opacity-0 invisible translate-y-2"
+                      }
+
+                      group-hover:opacity-100
+                      group-hover:visible
+                      group-hover:translate-y-0
+                    `}
+                  >
 
                     <Link
                       to="/profile"
+                      onClick={() => setAccountOpen(false)}
                       className="block px-4 py-3 text-white hover:bg-white/5"
                     >
                       Profile
@@ -174,6 +208,7 @@ const Navigation = () => {
 
                     <Link
                       to="/settings"
+                      onClick={() => setAccountOpen(false)}
                       className="block px-4 py-3 text-white hover:bg-white/5"
                     >
                       Settings
@@ -182,8 +217,11 @@ const Navigation = () => {
                     <div className="border-t border-white/10" />
 
                     <button
-                      onClick={logoutHandler}
-                      className="w-full text-left px-4 py-3 text-[#e50914] hover:bg-[#e50914]/10"
+                      onClick={() => {
+                        setAccountOpen(false);
+                        logoutHandler();
+                      }}
+                      className="w-full text-left px-4 py-3 text-sm sm:text-base text-[#e50914] hover:bg-[#e50914]/10"
                     >
                       Logout
                     </button>
