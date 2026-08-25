@@ -12,6 +12,7 @@ import {
 } from "react-icons/ai";
 
 import { useGetSpecificMovieQuery, useAddReviewMutation, useGetWatchProvidersQuery, useDeleteMovieMutation } from '../../redux/api/movies';
+import { genres } from '../../redux/constants';
 
 const MovieDetails = () => {
   const navigate = useNavigate();
@@ -80,8 +81,18 @@ const MovieDetails = () => {
   };
 
   if (isLoading) return <div>Loading...</div>;
-
   if (!movie) return <div>Movie not found</div>;
+
+  const movieGenres = movie.genre?.map((genreId) => {
+    const genre = genres.find(
+      (g) => g.id === String(genreId)
+    );
+
+    return genre?.name;
+  }).filter(Boolean);
+
+  console.log("Movie genre IDs:", movie.genre);
+  console.log("Movie genre names:", movieGenres);
 
   return (
       <div className="w-screen min-h-screen bg-[#131313] text-white font-['Anton'] selection:bg-[#e50914]/30">
@@ -145,6 +156,31 @@ const MovieDetails = () => {
         <p className="text-white/70 text-xl leading-relaxed max-w-3xl">
                 {movie.description}
         </p>
+
+        {movieGenres?.length > 0 && (
+          <div className="flex flex-wrap gap-2.5 mt-5 mb-9">
+            {movieGenres.map((genre) => (
+              <span
+                key={genre}
+                className="
+                  rounded-full
+                  bg-white/[0.04]
+                  border border-white/15
+                  text-[#e50914]
+                  text-sm
+                  font-sans
+                  tracking-wide
+                  transition-colors
+                  hover:bg-[#e50914]/10
+                  hover:border-[#e50914]/40
+                  hover:text-[#e50914]
+                "
+              >
+                {genre}
+              </span>
+            ))}
+          </div>
+        )}
 
         {movie.tmdbId && (
             <div className="mt-8">

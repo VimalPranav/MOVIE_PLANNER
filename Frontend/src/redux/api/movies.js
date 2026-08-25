@@ -4,7 +4,13 @@ import { MOVIE_URL, UPLOAD_URL } from "../constants.js";
 export const moviesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAllMovies: builder.query({
-      query: () => `${MOVIE_URL}/`,
+      query: ({ search = "", genre = "" } = {}) => ({
+        url: MOVIE_URL,
+        params: {
+          ...(search && { search }),
+          ...(genre && { genre }),
+        },
+      }),
     }),
     createMovie: builder.mutation({
       query: (newMovie) => ({

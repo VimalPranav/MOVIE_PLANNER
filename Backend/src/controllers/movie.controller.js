@@ -13,7 +13,23 @@ const createMovies = async (req, res) => {
 
 const getAllMovies = async (req, res) => {
   try {
-    const movies = await Movie.find();
+    const { search, genre } = req.query;
+
+    const filter = {};
+
+    if (search) {
+      filter.name = {
+        $regex: search,
+        $options: "i",
+      };
+    }
+
+    if (genre) {
+      filter.genre = Number(genre);
+    }
+
+    const movies = await Movie.find(filter);
+
     res.json(movies);
   } catch (error) {
     res.status(500).json({ error: error.message });

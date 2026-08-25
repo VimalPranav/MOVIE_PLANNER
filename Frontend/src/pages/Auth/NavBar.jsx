@@ -8,11 +8,12 @@ import {
   AiOutlineUserAdd,
 } from "react-icons/ai";
 import { MdOutlineLocalMovies } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../../redux/api/users";
 import { logout } from "../../redux/features/auth/auth_slice";
+import { genres } from "../../redux/constants";
 
 const Navigation = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -26,7 +27,9 @@ const Navigation = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState("");
+  const selectedGenre = searchParams.get("genre") || "";
 
   const [logoutApiCall] = useLogoutMutation();
 
@@ -45,12 +48,12 @@ const Navigation = () => {
         <div className="max-w-7xl mx-auto h-20 px-8 flex items-center justify-between">
 
           {/* LEFT SECTION */}
-          <div className="flex items-center gap-14">
+          <div className="flex items-center gap-8 lg:gap-10 min-w-0">
 
             {/* LOGO */}
             <Link
               to="/"
-              className="text-3xl font-extrabold tracking-tight text-[#e50914] hover:scale-105 transition-transform"
+              className="text-2xl font-extrabold tracking-tight text-[#e50914] hover:scale-105 transition-transform"
             >
               MOVIES<span className="text-white">PLANNER</span>
             </Link>
@@ -107,7 +110,7 @@ const Navigation = () => {
                     navigate(`/movies?search=${encodeURIComponent(search)}`);
                   }
                 }}
-                className="w-56 bg-white/5 border border-white/10 rounded-full py-2 pl-4 pr-10 text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-[#e50914]"
+                className="w-50 bg-white/5 border border-white/10 rounded-full py-2 pl-4 pr-10 text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-[#e50914]"
               />
 
               <AiOutlineSearch
@@ -120,6 +123,35 @@ const Navigation = () => {
                 }}
               />
             </div>
+
+            <select
+              value={selectedGenre}
+              onChange={(e) => {
+                const genre = e.target.value;
+
+                if (genre) {
+                  navigate(`/movies?genre=${genre}`);
+                } else {
+                  navigate("/movies");
+                }
+              }}
+              className="
+                bg-[#181818]
+                border border-white/10
+                text-white
+                rounded-xl
+                px-1 py-1
+                outline-none
+              "
+            >
+              <option value="">All Genres</option>
+
+              {genres.map((genre) => (
+                <option key={genre.id} value={genre.id}>
+                  {genre.name}
+                </option>
+              ))}
+            </select>
 
             {!userInfo ? (
               <div className="flex items-center gap-3">

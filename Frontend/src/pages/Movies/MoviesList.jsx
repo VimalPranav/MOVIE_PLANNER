@@ -9,7 +9,14 @@ import { logout } from "../../redux/features/auth/auth_slice";
 import { MdOutlineLocalMovies } from "react-icons/md";
 
 const MoviesList = () => {
-    const { data: movies } = useGetAllMoviesQuery();
+    const [searchParams] = useSearchParams();
+    const search = searchParams.get("search") || "";
+    const selectedGenre = searchParams.get("genre") || "";
+
+    const { data: movies } = useGetAllMoviesQuery({
+        search,
+        genre: selectedGenre,
+    });
     useEffect(() => {
     console.log(movies);
     }, [movies]);
@@ -23,8 +30,6 @@ const MoviesList = () => {
     const [toggleWatchlist] = useToggleWatchlistMutation();
     const { userInfo } = useSelector((state) => state.auth);
 
-    const [searchParams] = useSearchParams();
-    const search = searchParams.get("search") || "";
     const filteredMovies = movies?.filter((movie) =>
      movie.name.toLowerCase().includes(search.toLowerCase())
     ) || [];
