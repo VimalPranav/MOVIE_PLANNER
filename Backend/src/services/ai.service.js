@@ -1,4 +1,3 @@
-import OpenAI from "openai";
 import { GoogleGenAI, Type } from "@google/genai";
 
 const genai = new GoogleGenAI({
