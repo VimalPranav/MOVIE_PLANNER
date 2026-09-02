@@ -4,6 +4,7 @@ import userRouter from "./routes/user.route.js";
 import movieRouter from "./routes/movie.route.js";
 import uploadRouter from "./routes/upload.route.js";
 import tmdbRouter from "./routes/tmdb.route.js";
+import aiRouter from "./routes/ai.route.js";
 
 import path from "path";
 import cors from "cors";
@@ -29,6 +30,7 @@ app.use("/api/v1/auth", userRouter);
 app.use("/api/v1/movies", movieRouter);
 app.use("/api/v1/upload", uploadRouter);
 app.use("/api/v1/tmdb", tmdbRouter);
+app.use("/api/v1/ai", aiRouter);
 
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname + "/uploads")));
